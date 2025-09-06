@@ -4,6 +4,8 @@
  */
 package DoIt.telas;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Admin
@@ -124,7 +126,8 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
-        // TODO add your handling code here:
+        // Chama o método verificar login
+        verificarLogin();
     }//GEN-LAST:event_btnEntrarActionPerformed
 
     private void txtUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsuarioActionPerformed
@@ -161,7 +164,10 @@ public class Login extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Login().setVisible(true);
+                //new Login().setVisible(true);
+                Login login = new Login();
+                login.setLocationRelativeTo(null); //Faz com que a nova página apareça centralizada na tela
+                login.setVisible(true);
             }
         });
     }
@@ -175,4 +181,17 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JPasswordField txtSenha;
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
+    
+    private void verificarLogin(){
+        if(txtUsuario.getText().equals("") || txtSenha.getText().equals("")){
+            JOptionPane.showMessageDialog(rootPane, "Por favor, preencha ambos os campos");
+        }
+        
+        else{
+            ListaAtividades lista = new ListaAtividades();
+            lista.setLocationRelativeTo(null); //Faz com que a nova página apareça centralizada na tela
+            lista.setVisible(true);
+            dispose();
+        }
+    }
 }

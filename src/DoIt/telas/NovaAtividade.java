@@ -4,6 +4,10 @@
  */
 package DoIt.telas;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Admin
@@ -35,7 +39,7 @@ public class NovaAtividade extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         btnAdicionar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        txtDescricao = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -79,10 +83,10 @@ public class NovaAtividade extends javax.swing.JFrame {
             }
         });
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jTextArea1.setAutoscrolls(false);
-        jScrollPane1.setViewportView(jTextArea1);
+        txtDescricao.setColumns(20);
+        txtDescricao.setRows(5);
+        txtDescricao.setAutoscrolls(false);
+        jScrollPane1.setViewportView(txtDescricao);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -155,7 +159,8 @@ public class NovaAtividade extends javax.swing.JFrame {
     }//GEN-LAST:event_txtDataActionPerformed
 
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
-        // TODO add your handling code here:
+        // Chama o método criarAtividade;
+        criarAtividade();
     }//GEN-LAST:event_btnAdicionarActionPerformed
 
     /**
@@ -201,8 +206,50 @@ public class NovaAtividade extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField txtData;
+    private javax.swing.JTextArea txtDescricao;
     private javax.swing.JTextField txtTitulo;
     // End of variables declaration//GEN-END:variables
+
+    private void criarAtividade(){
+        if(txtTitulo.getText().equals("") || txtData.getText().equals("") || txtDescricao.getText().equals("")){
+            JOptionPane.showMessageDialog(rootPane, "Falor preencher todos os campos");
+        }
+        
+        else{
+            validarData(txtData.getText());
+            dispose();
+        }
+    }
+    
+    //Valida a data informada ao cadastrar uma atividade
+    private boolean validarData(String data) {
+        // Divide a data pelo separador "/"
+        String[] partes = data.split("/");
+
+        // Verifica se a data tem 3 partes: dia, mês e ano
+        if (partes.length != 3) {
+            return false;
+        }
+
+        try {
+            int dia = Integer.parseInt(partes[0]);
+            int mes = Integer.parseInt(partes[1]);
+            int ano = Integer.parseInt(partes[2]);
+
+            // Verifica se o dia, mês e ano estão dentro dos limites válidos
+            if (dia < 1 || dia > 31 || mes < 1 || mes > 12 || ano < 1900 || ano > 2100) {
+                return false;
+            }
+
+            // Verifica se a data realmente existe
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            dateFormat.setLenient(false); // Desabilita a interpretação leniente
+            dateFormat.parse(data); // Tenta converter a string para uma data válida
+            return true;
+        } catch (NumberFormatException | ParseException e) {
+            JOptionPane.showMessageDialog(rootPane, "Informe uma data válida!");// Se houver erro na conversão, retorna falso
+            return false;
+        }
+    }
 }
