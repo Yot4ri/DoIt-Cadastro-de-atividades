@@ -31,6 +31,7 @@ public class NovaAtividade extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        btnVoltar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         txtTitulo = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
@@ -44,6 +45,14 @@ public class NovaAtividade extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(232, 210, 129));
+
+        btnVoltar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnVoltar.setText("Retornar");
+        btnVoltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVoltarActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
@@ -69,7 +78,7 @@ public class NovaAtividade extends javax.swing.JFrame {
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 2, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel3.setText("Data:");
+        jLabel3.setText("Data:(dd/mm/yyyy)");
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 2, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
@@ -93,25 +102,30 @@ public class NovaAtividade extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(105, 105, 105)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(56, 56, 56)
-                        .addComponent(txtData))
+                        .addGap(105, 105, 105)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, 56)
+                                .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(9, 9, 9)
+                                .addComponent(txtTitulo))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING))
+                                .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(9, 9, 9)
-                        .addComponent(txtTitulo))
-                    .addComponent(jLabel1)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnVoltar)
+                        .addGap(45, 45, 45)
                         .addComponent(btnAdicionar)
-                        .addGap(1, 1, 1))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(1, 1, 1)))
                 .addGap(102, 102, 102))
         );
         jPanel1Layout.setVerticalGroup(
@@ -132,7 +146,9 @@ public class NovaAtividade extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnAdicionar)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAdicionar)
+                    .addComponent(btnVoltar))
                 .addContainerGap(23, Short.MAX_VALUE))
         );
 
@@ -162,6 +178,10 @@ public class NovaAtividade extends javax.swing.JFrame {
         // Chama o método criarAtividade;
         criarAtividade();
     }//GEN-LAST:event_btnAdicionarActionPerformed
+
+    private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
+        fechaJanela();
+    }//GEN-LAST:event_btnVoltarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -193,13 +213,17 @@ public class NovaAtividade extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new NovaAtividade().setVisible(true);
+                NovaAtividade novaAtv = new NovaAtividade();
+                novaAtv.setLocationRelativeTo(null);//Faz com que a nova página apareça centralizada na tela
+
+                novaAtv.setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdicionar;
+    private javax.swing.JButton btnVoltar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -215,41 +239,50 @@ public class NovaAtividade extends javax.swing.JFrame {
         if(txtTitulo.getText().equals("") || txtData.getText().equals("") || txtDescricao.getText().equals("")){
             JOptionPane.showMessageDialog(rootPane, "Falor preencher todos os campos");
         }
-        
+                
         else{
             validarData(txtData.getText());
             dispose();
+            ListaAtividades lista = new ListaAtividades();
+            lista.setLocationRelativeTo(null); //Faz com que a nova página apareça centralizada na tela
+            lista.setVisible(true);
         }
     }
     
     //Valida a data informada ao cadastrar uma atividade
     private boolean validarData(String data) {
-        // Divide a data pelo separador "/"
+        // Divide a data pelo separador "/", onde ele aparece, ele divide "split"
         String[] partes = data.split("/");
 
         // Verifica se a data tem 3 partes: dia, mês e ano
         if (partes.length != 3) {
-            return false;
+            JOptionPane.showMessageDialog(rootPane, "Informe uma data válida!");// Se houver erro na conversão, retorna falso
         }
-
-        try {
+        
             int dia = Integer.parseInt(partes[0]);
             int mes = Integer.parseInt(partes[1]);
             int ano = Integer.parseInt(partes[2]);
-
+            
+            try{
             // Verifica se o dia, mês e ano estão dentro dos limites válidos
             if (dia < 1 || dia > 31 || mes < 1 || mes > 12 || ano < 1900 || ano > 2100) {
-                return false;
+                JOptionPane.showMessageDialog(rootPane, "Informe uma data válida!");// Se houver erro na conversão, retorna falso
             }
-
+            
             // Verifica se a data realmente existe
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
             dateFormat.setLenient(false); // Desabilita a interpretação leniente
             dateFormat.parse(data); // Tenta converter a string para uma data válida
             return true;
-        } catch (NumberFormatException | ParseException e) {
+            
+        } catch (NumberFormatException | ParseException | ArrayIndexOutOfBoundsException e) {
             JOptionPane.showMessageDialog(rootPane, "Informe uma data válida!");// Se houver erro na conversão, retorna falso
             return false;
         }
+    }
+    
+        private void fechaJanela(){
+        dispose();
+        new Login().setVisible(true);
     }
 }
