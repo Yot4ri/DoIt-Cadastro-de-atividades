@@ -1,15 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package DoIt.telas;
 
 import javax.swing.JOptionPane;
+import DoIt.util.DatabaseUtil;
 
-/**
- *
- * @author Admin
- */
 public class Login extends javax.swing.JFrame {
 
     /**
@@ -139,7 +132,6 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
-        // Chama o método verificar login
         verificarLogin();
     }//GEN-LAST:event_btnEntrarActionPerformed
 
@@ -148,7 +140,10 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_txtUsuarioActionPerformed
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
-        // TODO add your handling code here:
+        NovoUsuario cadastro = new NovoUsuario();
+        cadastro.setLocationRelativeTo(null);
+        cadastro.setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     /**

@@ -195,7 +195,9 @@ public class ListaAtividades extends javax.swing.JFrame {
     }
     
     private void fechaJanela(){
+        Login login = new Login();
+        login.setLocationRelativeTo(null);
+        login.setVisible(true);
         dispose();
-        new NovaAtividade().setVisible(true);
     }
 }
