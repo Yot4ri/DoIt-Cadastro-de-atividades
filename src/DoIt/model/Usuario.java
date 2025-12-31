@@ -37,4 +37,12 @@ public class Usuario {
     protected void setEmail(String email){
         this.email = email;
     }
+    
+    protected String getSenha(){
+        return senha;
+    }
+    
+    protected void setSenha(String senha){
+        this.senha = senha;
+    }
 }

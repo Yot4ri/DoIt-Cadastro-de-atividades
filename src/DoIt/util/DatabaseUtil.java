@@ -12,11 +12,11 @@ public class DatabaseUtil{
     
     public static Connection conectar(){ //Cria a conexão com o DB
         try{
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection conexao = DriverManager.getConnection(url,usuario,senha);
-        System.out.println("Conexão bem-sucedida!");
-        conexao.close();
-        return conexao;
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection conexao = DriverManager.getConnection(url,usuario,senha);
+            System.out.println("Conexão bem-sucedida!");
+            
+            return conexao;
         } 
         
         //No caso de algum erro, retorna nulo
@@ -27,6 +27,19 @@ public class DatabaseUtil{
         catch(SQLException e){//Erro no endereço da conexão
         System.out.println("Erro ao conectar: " + e.getMessage());
         return null;
+        }
+    }
+    
+    public static Connection desconectar(){
+        try{
+            Connection conexao = DriverManager.getConnection(url,usuario,senha);
+            conexao.close();
+            return null;
+        }
+        
+        catch(SQLException e){
+            System.out.println("Erro ao desconectar: " + e.getMessage());
+            return null;
         }
     }
 }

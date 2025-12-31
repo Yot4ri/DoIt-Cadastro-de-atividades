@@ -1,5 +1,10 @@
 package DoIt.dao;
 
-public class UsuarioDAO {
+import DoIt.model.Usuario;
+
+public interface UsuarioDAO {
     
+    Usuario getId(int id);
+    boolean criarUsuario(Usuario usuario, Usuario senha);
+    boolean verificarUsuario(Usuario usuario, Usuario senha);
 }
