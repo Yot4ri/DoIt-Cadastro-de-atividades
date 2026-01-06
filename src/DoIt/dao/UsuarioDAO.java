@@ -5,6 +5,6 @@ import DoIt.model.Usuario;
 public interface UsuarioDAO {
     
     Usuario getId(int id);
-    boolean criarUsuario(Usuario usuario, Usuario senha);
-    boolean verificarUsuario(Usuario usuario, Usuario senha);
+    boolean criarUsuario(String nome, String email, String senha);
+    boolean verificarUsuario(String email, String senha);
 }

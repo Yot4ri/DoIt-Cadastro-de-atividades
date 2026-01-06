@@ -1,7 +1,6 @@
 package DoIt.telas;
 
 import javax.swing.JOptionPane;
-import DoIt.util.DatabaseUtil;
 
 public class Login extends javax.swing.JFrame {
 
@@ -37,7 +36,7 @@ public class Login extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 2, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel1.setText("Usuário:");
+        jLabel1.setText("Email:");
 
         txtUsuario.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtUsuario.addActionListener(new java.awt.event.ActionListener() {
@@ -196,15 +195,22 @@ public class Login extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
     
     private void verificarLogin(){
+        DoIt.dao.UsuarioDAO dao = new DoIt.dao.UsuarioDAOImpl();
+        String email = txtUsuario.getText();
+        String senha = txtSenha.getText();
+        
         if(txtUsuario.getText().equals("") || txtSenha.getText().equals("")){
             JOptionPane.showMessageDialog(rootPane, "Por favor, preencha ambos os campos");
         }
         
-        else{
+        else if(dao.verificarUsuario(email,senha) == true){
             ListaAtividades lista = new ListaAtividades();
             lista.setLocationRelativeTo(null); //Faz com que a nova página apareça centralizada na tela
             lista.setVisible(true);
             dispose();
+        }
+        else{
+            JOptionPane.showMessageDialog(rootPane,"Usuário não encontrado");
         }
     }
 }

@@ -3,46 +3,38 @@ package DoIt.model;
 public class Usuario {
     
     protected Integer id;
-    protected String nome, senha, telefone, email;
+    protected String nome, senha, email;
     
     
-    protected Integer getId(){
+    public Integer getId(){
         return id;
     }
     
-    protected void setId(Integer id){
+    public void setId(Integer id){
         this.id=id;
     }
     
-    protected String getNome(){
+    public String getNome(){
         return nome;
     }
     
-    protected void setNome(String nome){
+    public void setNome(String nome){
         this.nome = nome;
     }
     
-    protected String getTelefone(){
-        return telefone;
-    }
-    
-    protected void setTelefone(String telefone){
-        this.telefone = telefone;
-    }
-    
-    protected String getEmail(){
+    public String getEmail(){
         return email;
     }
     
-    protected void setEmail(String email){
+    public void setEmail(String email){
         this.email = email;
     }
     
-    protected String getSenha(){
+    public String getSenha(){
         return senha;
     }
     
-    protected void setSenha(String senha){
+    public void setSenha(String senha){
         this.senha = senha;
     }
 }
