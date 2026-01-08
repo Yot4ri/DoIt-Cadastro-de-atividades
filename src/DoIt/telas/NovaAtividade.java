@@ -1,9 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package DoIt.telas;
 
+import DoIt.dao.UsuarioDAOImpl;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
@@ -242,7 +239,20 @@ public class NovaAtividade extends javax.swing.JFrame {
         }
                 
         else{
-            validarData(txtData.getText());
+            
+            String data = txtData.getText();
+            
+            if(validarData(data) == true){
+                DoIt.dao.AtividadeDAO dao = new DoIt.dao.AtividadeDAOImpl();
+                String atividade = txtTitulo.getText();
+                String descricao = txtDescricao.getText();
+                int idUsuario = DoIt.util.Sessao.idUsuarioLogado;
+                
+                if(dao.criarAtividade(atividade,descricao,data,idUsuario) == true){
+                    JOptionPane.showMessageDialog(rootPane,"Atividade cadastrada com sucesso!");
+                }
+            }
+            
             dispose();
             ListaAtividades lista = new ListaAtividades();
             lista.setLocationRelativeTo(null); //Faz com que a nova página apareça centralizada na tela
@@ -272,12 +282,13 @@ public class NovaAtividade extends javax.swing.JFrame {
             
             // Verifica se a data realmente existe
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-            dateFormat.setLenient(false); // Desabilita a interpretação leniente
+            dateFormat.setLenient(false); // Verifica validade da data
             dateFormat.parse(data); // Tenta converter a string para uma data válida
             return true;
             
         } catch (NumberFormatException | ParseException | ArrayIndexOutOfBoundsException e) {
             JOptionPane.showMessageDialog(rootPane, "Informe uma data válida!");// Se houver erro na conversão, retorna falso
+            System.out.println(e.getMessage());
             return false;
         }
     }

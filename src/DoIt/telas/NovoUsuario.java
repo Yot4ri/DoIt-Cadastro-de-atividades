@@ -238,7 +238,7 @@ public class NovoUsuario extends javax.swing.JFrame {
         }
         
         else{
-            JOptionPane.showMessageDialog(rootPane,"Usuário não encontrado");
+            JOptionPane.showMessageDialog(rootPane,"Erro ao cadastrar usuário, tente novamente");
         }
     }
 }

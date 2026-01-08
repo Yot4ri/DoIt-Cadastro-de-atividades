@@ -15,8 +15,6 @@ public class UsuarioDAOImpl implements UsuarioDAO{
     @Override //Finally sempre é executado, indiferente do resultado de try
     public Usuario getId(int id) {
         
-        //Declaração de variáveis
-        
         //Bloco de declaração e execução do SQL para Read
         try(conn){
             st = conn.prepareStatement("SELECT * FROM Usuario");
@@ -35,8 +33,9 @@ public class UsuarioDAOImpl implements UsuarioDAO{
             rs.close();
             st.close();
         }
-        catch(SQLException e){
-            System.out.println(e.getMessage());
+        catch(SQLException e){ //Coleta qualquer erro que venha a surgir durante a execução
+            System.out.println("Usuário não encontrado!" + e.getMessage()); //Informa a mensagem de erro no terminal
+            return null;
         }
         
         /*
@@ -48,6 +47,7 @@ public class UsuarioDAOImpl implements UsuarioDAO{
         return usuario;
     }
 
+    //Bloco de declaração e execução do SQL para Create
     @Override
     public boolean criarUsuario(String nome, String email, String senha) {
        
@@ -66,6 +66,7 @@ public class UsuarioDAOImpl implements UsuarioDAO{
         return true;
     }
 
+    //Bloco de declaração e execução do SQL para Read, mas com o método de verificação, ou seja, utilizando WHERE
     @Override
     public boolean verificarUsuario(String email, String senha) {
         
@@ -81,6 +82,9 @@ public class UsuarioDAOImpl implements UsuarioDAO{
                 usuario.setNome(rs.getString("Nome"));
                 usuario.setEmail(rs.getString("Email"));
                 usuario.setSenha(rs.getString("Senha"));
+                
+                DoIt.util.Sessao.idUsuarioLogado = rs.getInt("Id");//Salva o Id do usuário nos dados da sessão
+                
             }
             else{
                 return false;
@@ -92,7 +96,7 @@ public class UsuarioDAOImpl implements UsuarioDAO{
             System.out.println("Usuário não encontrado" + e.getMessage());
             return false;
         }   
-        
+            
         return true;
     }
    

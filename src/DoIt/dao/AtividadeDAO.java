@@ -7,6 +7,6 @@ public interface AtividadeDAO {
     
     Atividade getId(int id);
     List<Atividade> getAll();
-    boolean criarAtividade(Atividade atividade, Atividade descricao);
-    boolean deleteAtividade(Atividade atividade);
+    boolean criarAtividade(String atividade, String descricao, String data, int idUsuario);
+    boolean deleteAtividade(int id);
 }

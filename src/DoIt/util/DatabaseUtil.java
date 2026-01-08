@@ -14,7 +14,6 @@ public class DatabaseUtil{
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection conexao = DriverManager.getConnection(url,usuario,senha);
-            System.out.println("Conexão bem-sucedida!");
             
             return conexao;
         } 
