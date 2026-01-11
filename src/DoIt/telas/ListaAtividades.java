@@ -1,12 +1,22 @@
 package DoIt.telas;
 
-public class ListaAtividades extends javax.swing.JFrame {
+import DoIt.dao.AtividadeDAO;
+import DoIt.dao.AtividadeDAOImpl;
+import DoIt.model.Atividade;
+import DoIt.util.Sessao;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
 
+//Database → DAO → List<Atividade> → TableModel → JTable
+
+public class ListaAtividades extends javax.swing.JFrame {
+     DefaultTableModel model;
     /**
      * Creates new form ListaAtividades
      */
     public ListaAtividades() {
         initComponents();
+        ListaAtividades();
     }
 
     /**
@@ -20,7 +30,7 @@ public class ListaAtividades extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabela = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         btnAdicionar = new javax.swing.JButton();
         btnRetornar = new javax.swing.JButton();
@@ -29,8 +39,8 @@ public class ListaAtividades extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(158, 202, 225));
 
-        jTable1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabela.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tabela.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -53,15 +63,15 @@ public class ListaAtividades extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.setColumnSelectionAllowed(true);
-        jTable1.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(jTable1);
-        jTable1.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
-            jTable1.getColumnModel().getColumn(2).setResizable(false);
-            jTable1.getColumnModel().getColumn(3).setResizable(false);
+        tabela.setColumnSelectionAllowed(true);
+        tabela.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(tabela);
+        tabela.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        if (tabela.getColumnModel().getColumnCount() > 0) {
+            tabela.getColumnModel().getColumn(0).setResizable(false);
+            tabela.getColumnModel().getColumn(1).setResizable(false);
+            tabela.getColumnModel().getColumn(2).setResizable(false);
+            tabela.getColumnModel().getColumn(3).setResizable(false);
         }
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -184,7 +194,7 @@ public class ListaAtividades extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tabela;
     // End of variables declaration//GEN-END:variables
 
     private void novaAtividade(){
@@ -199,5 +209,28 @@ public class ListaAtividades extends javax.swing.JFrame {
         login.setLocationRelativeTo(null);
         login.setVisible(true);
         dispose();
+    }
+    
+    private void ListaAtividades(){
+        
+        model = (DefaultTableModel) tabela.getModel(); //Pega o modelo da tabela já existente
+        AtividadeDAO dao = new AtividadeDAOImpl();
+        dao.listarPorUsuario(Sessao.idUsuarioLogado);
+        atualizarTabela();
+    }
+    
+    private void atualizarTabela(){
+        model.setRowCount(0); //Limpa as linhas da tabela
+        
+        AtividadeDAO dao = new AtividadeDAOImpl();
+        List<Atividade> atividades = dao.listarPorUsuario(Sessao.idUsuarioLogado);
+        
+        for(Atividade a : atividades){
+            model.addRow(new Object[]{
+            a.getTitulo(),
+            a.getDescricao(),
+            a.getData(),
+        });
+        }
     }
 }

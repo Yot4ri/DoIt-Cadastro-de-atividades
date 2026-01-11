@@ -6,7 +6,7 @@ import java.util.List;
 public interface AtividadeDAO {
     
     Atividade getId(int id);
-    List<Atividade> getAll();
+    List<Atividade> listarPorUsuario(int idUsuario);
     boolean criarAtividade(String atividade, String descricao, String data, int idUsuario);
     boolean deleteAtividade(int id);
 }

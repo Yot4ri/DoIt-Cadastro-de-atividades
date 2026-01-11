@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS Usuario (
     Id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
     Nome VARCHAR(255) NOT NULL,
     Email VARCHAR(255) NOT NULL,
+    Senha Varchar(255) NOT NULL,
     Id_acessibilidade INT,
      FOREIGN KEY (id_acessibilidade) 
 		REFERENCES Acessibilidade(Id)
@@ -17,9 +18,10 @@ CREATE TABLE IF NOT EXISTS Usuario (
 
 CREATE TABLE IF NOT EXISTS Atividade (
     Id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    Titulo VARCHAR(255) NOT NULL,
     Descricao VARCHAR(255) NOT NULL,
     Data DATE NOT NULL,
-    id_usuario INT NOT NULL,
+    id_usuario INT,
     
     FOREIGN KEY (id_usuario)
         REFERENCES Usuario (Id)
@@ -30,3 +32,9 @@ create index idx_atividade_usuario_id on Atividade(id_usuario);
 
 /*Cria o index de pesquisa para a relação de acessibilidade-usuário*/
 create index idx_acessibilidade_usuario on Usuario(Id_acessibilidade);
+
+show tables;
+
+select * from Usuario;
+select * from atividade;
+

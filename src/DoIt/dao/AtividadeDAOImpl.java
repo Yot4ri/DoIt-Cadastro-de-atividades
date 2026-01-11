@@ -2,14 +2,15 @@ package DoIt.dao;
 
 import DoIt.model.Atividade;
 import DoIt.util.DatabaseUtil;
-import java.util.List;
-import DoIt.model.Usuario;
+import DoIt.util.Sessao;
 import java.sql.PreparedStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AtividadeDAOImpl implements AtividadeDAO{
     PreparedStatement st;
@@ -48,16 +49,32 @@ public class AtividadeDAOImpl implements AtividadeDAO{
 
     //Bloco de declaração e execução do SQL para Read, mas no caso, para a Lista de atividades de determinado usuário, utilizando WHERE
     @Override
-    public List<Atividade> getAll() {
+    public  List<Atividade> listarPorUsuario(int idUsuario){
+        
+        List<Atividade> lista = new ArrayList();//Cria uma lista para armazenar as atividades
         
         try(conn){
+            st = conn.prepareStatement("SELECT * FROM Atividade WHERE id_usuario = ?");
+            st.setInt(1, Sessao.idUsuarioLogado);
             
+            ResultSet rs = st.executeQuery();
+            
+            while(rs.next()){
+                Atividade a = new Atividade();
+                
+                a.setId(rs.getInt("Id"));
+                a.setTitulo(rs.getString("Titulo"));
+                a.setDescricao(rs.getString("Descricao"));
+                a.setData(rs.getString("Data"));
+                
+                lista.add(a);//Adiciona a atividade a lista
+            }
         }
         catch(SQLException e){
             System.out.println("Atividades não encontradas \n" + e.getMessage());
             return null;
         }
-        
+        return lista;
     }
 
     //Bloco de declaração e execução do SQL para Create
@@ -65,7 +82,7 @@ public class AtividadeDAOImpl implements AtividadeDAO{
     public boolean criarAtividade(String atividade, String descricao, String data, int idUsuario) {
         
         try(conn){
-            st = conn.prepareStatement("INSERT INTO Atividade(Titulo, Descricao, Data, id_usuario) VALUES (?,?,?,?)");
+            st = conn.prepareStatement("INSERT INTO Atividade(Titulo, Descricao, Data, Realizado, id_usuario) VALUES (?,?,?,?,?)");
             st.setString(1, atividade);
             st.setString(2, descricao);
             
@@ -75,7 +92,8 @@ public class AtividadeDAOImpl implements AtividadeDAO{
             java.sql.Date sqlData = java.sql.Date.valueOf(DL);
             
             st.setDate(3, sqlData);
-            st.setInt(4, idUsuario);
+            st.setBoolean(4, false);
+            st.setInt(5, idUsuario);
             
             //Executa a atualização e o comando do SQL
             st.executeUpdate();

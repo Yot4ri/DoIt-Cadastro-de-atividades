@@ -4,6 +4,7 @@ public class Atividade {
     
     protected Integer id;
     protected String titulo, descricao, data;
+    protected boolean realizado;
     
     public Integer getId(){
         return id;
@@ -35,5 +36,13 @@ public class Atividade {
     
     public void setData(String data){
         this.data = data;
+    }
+    
+    public boolean getRealizado(){
+        return realizado;
+    }
+    
+    public void setRealizado(boolean realizado){
+    this.realizado = realizado;
     }
 }
