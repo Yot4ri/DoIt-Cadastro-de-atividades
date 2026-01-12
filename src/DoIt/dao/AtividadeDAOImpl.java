@@ -66,6 +66,7 @@ public class AtividadeDAOImpl implements AtividadeDAO{
                 a.setTitulo(rs.getString("Titulo"));
                 a.setDescricao(rs.getString("Descricao"));
                 a.setData(rs.getString("Data"));
+                a.setRealizado(rs.getBoolean("Realizado"));
                 
                 lista.add(a);//Adiciona a atividade a lista
             }
@@ -111,10 +112,9 @@ public class AtividadeDAOImpl implements AtividadeDAO{
     public boolean deleteAtividade(int id) {
         
         try(conn){
-            st = conn.prepareStatement("DELETE FROM Atividade WHERE id = ?");
+            st = conn.prepareStatement("DELETE FROM Atividade WHERE Id = ?");
             st.setInt(1,id);
             st.executeUpdate();
-            
         }
         catch(SQLException e){
             System.out.println("Atividade não encontrada \n" + e.getMessage());
@@ -123,6 +123,23 @@ public class AtividadeDAOImpl implements AtividadeDAO{
         
         return true;
     }
+    
+    @Override
+    public boolean atualizarRealizado(int id, boolean realizado){
+        
+        try(conn){
+            st = conn.prepareStatement("UPDATE Atividade SET Realizado = ? Where id = ?");
+            st.setBoolean(1,realizado);
+            st.setInt(2,id);
+            st.executeUpdate();
+        }
+        catch(SQLException e){
+            System.out.println("Falha ao atualizar atividade!" + e.getMessage());
+            return false;
+        }
+        
+        return true;
+    } 
     
     
     

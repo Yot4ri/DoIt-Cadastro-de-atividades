@@ -3,12 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Admin/Desktop/Ds%20Material/PI%20-%202/doIt/src/DoIt/util/Sessao.java</file>
-            <file>file:/C:/Users/Admin/Desktop/Ds%20Material/PI%20-%202/doIt/src/DoIt/telas/NovaAtividade.java</file>
-            <file>file:/C:/Users/Admin/Desktop/Ds%20Material/PI%20-%202/doIt/src/DoIt/model/Atividade.java</file>
-            <file>file:/C:/Users/Admin/Desktop/Ds%20Material/PI%20-%202/doIt/src/DoIt/dao/AtividadeDAOImpl.java</file>
             <file>file:/C:/Users/Admin/Desktop/Ds%20Material/PI%20-%202/doIt/src/DoIt/dao/AtividadeDAO.java</file>
             <file>file:/C:/Users/Admin/Desktop/Ds%20Material/PI%20-%202/doIt/src/DoIt/telas/ListaAtividades.java</file>
+            <file>file:/C:/Users/Admin/Desktop/Ds%20Material/PI%20-%202/doIt/src/DoIt/dao/AtividadeDAOImpl.java</file>
         </group>
     </open-files>
 </project-private>

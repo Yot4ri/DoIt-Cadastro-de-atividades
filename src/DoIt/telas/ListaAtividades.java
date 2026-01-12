@@ -5,12 +5,14 @@ import DoIt.dao.AtividadeDAOImpl;
 import DoIt.model.Atividade;
 import DoIt.util.Sessao;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 //Database → DAO → List<Atividade> → TableModel → JTable
 
 public class ListaAtividades extends javax.swing.JFrame {
      DefaultTableModel model;
+     int selecao;
     /**
      * Creates new form ListaAtividades
      */
@@ -18,6 +20,9 @@ public class ListaAtividades extends javax.swing.JFrame {
         initComponents();
         ListaAtividades();
     }
+    
+    private List<Atividade> atividades;
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -34,6 +39,7 @@ public class ListaAtividades extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         btnAdicionar = new javax.swing.JButton();
         btnRetornar = new javax.swing.JButton();
+        btnRemover = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -52,7 +58,7 @@ public class ListaAtividades extends javax.swing.JFrame {
                 java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Boolean.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -65,6 +71,11 @@ public class ListaAtividades extends javax.swing.JFrame {
         });
         tabela.setColumnSelectionAllowed(true);
         tabela.getTableHeader().setReorderingAllowed(false);
+        tabela.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tabelaMousePressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(tabela);
         tabela.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         if (tabela.getColumnModel().getColumnCount() > 0) {
@@ -94,6 +105,14 @@ public class ListaAtividades extends javax.swing.JFrame {
             }
         });
 
+        btnRemover.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnRemover.setText("Remover");
+        btnRemover.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoverActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -105,10 +124,12 @@ public class ListaAtividades extends javax.swing.JFrame {
                         .addComponent(jLabel1))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(17, 17, 17)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(btnRetornar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnRemover)
+                                .addGap(18, 18, 18)
                                 .addComponent(btnAdicionar))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(18, Short.MAX_VALUE))
@@ -120,11 +141,12 @@ public class ListaAtividades extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAdicionar)
-                    .addComponent(btnRetornar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnRetornar)
+                    .addComponent(btnRemover, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -150,6 +172,14 @@ public class ListaAtividades extends javax.swing.JFrame {
         // TODO add your handling code here:
         fechaJanela();
     }//GEN-LAST:event_btnRetornarActionPerformed
+
+    private void btnRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverActionPerformed
+        deletarAtividade();
+    }//GEN-LAST:event_btnRemoverActionPerformed
+
+    private void tabelaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaMousePressed
+        selecao = tabela.getSelectedRow();
+    }//GEN-LAST:event_tabelaMousePressed
 
     /**
      * @param args the command line arguments
@@ -183,13 +213,14 @@ public class ListaAtividades extends javax.swing.JFrame {
             public void run() {
                 ListaAtividades listaAtv = new ListaAtividades();
                 listaAtv.setLocationRelativeTo(null);//A janela será exibida no meio da tela;
-                new ListaAtividades().setVisible(true);
+                listaAtv.setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdicionar;
+    private javax.swing.JButton btnRemover;
     private javax.swing.JButton btnRetornar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
@@ -214,23 +245,69 @@ public class ListaAtividades extends javax.swing.JFrame {
     private void ListaAtividades(){
         
         model = (DefaultTableModel) tabela.getModel(); //Pega o modelo da tabela já existente
+        
+        model.addTableModelListener(e -> { //Adiciona o Listener para a tabela, especificamente para Updates
+            if (e.getType() == javax.swing.event.TableModelEvent.UPDATE) {
+
+            int linha = e.getFirstRow();
+            int coluna = e.getColumn();
+
+            // coluna 3 = "Realizado"
+            if (coluna == 3) {
+                boolean realizado = (boolean) model.getValueAt(linha, 3); //Lê o valor do checkbox informado
+
+                Atividade atividade = atividades.get(linha);
+
+                AtividadeDAO dao = new AtividadeDAOImpl();
+                dao.atualizarRealizado(atividade.getId(), realizado);
+            }
+        }
+            
+        });
+                
+                
         AtividadeDAO dao = new AtividadeDAOImpl();
         dao.listarPorUsuario(Sessao.idUsuarioLogado);
         atualizarTabela();
     }
     
-    private void atualizarTabela(){
+    public void atualizarTabela(){
         model.setRowCount(0); //Limpa as linhas da tabela
         
         AtividadeDAO dao = new AtividadeDAOImpl();
-        List<Atividade> atividades = dao.listarPorUsuario(Sessao.idUsuarioLogado);
+        atividades = dao.listarPorUsuario(Sessao.idUsuarioLogado);
         
         for(Atividade a : atividades){
             model.addRow(new Object[]{
             a.getTitulo(),
             a.getDescricao(),
             a.getData(),
+            a.getRealizado(),
         });
         }
     }
+    
+    private void deletarAtividade() {
+
+    int linha = tabela.getSelectedRow();
+
+    if (linha == -1) {
+        JOptionPane.showMessageDialog(rootPane, "Selecione uma atividade para excluir!");
+        return;
+    }
+
+    Atividade atividade = atividades.get(linha);
+
+    AtividadeDAO dao = new AtividadeDAOImpl();
+    boolean sucesso = dao.deleteAtividade(atividade.getId());
+
+    if (sucesso) {
+        JOptionPane.showMessageDialog(rootPane, "Atividade excluída com sucesso!");
+        atualizarTabela();
+    } else {
+        JOptionPane.showMessageDialog(rootPane, "Erro ao excluir atividade!");
+    }
+}
+
+    
 }

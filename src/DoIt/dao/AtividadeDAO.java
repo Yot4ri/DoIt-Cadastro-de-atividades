@@ -9,4 +9,5 @@ public interface AtividadeDAO {
     List<Atividade> listarPorUsuario(int idUsuario);
     boolean criarAtividade(String atividade, String descricao, String data, int idUsuario);
     boolean deleteAtividade(int id);
+    boolean atualizarRealizado(int id, boolean realizado);
 }

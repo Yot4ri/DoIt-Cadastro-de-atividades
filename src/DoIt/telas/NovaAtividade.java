@@ -234,7 +234,7 @@ public class NovaAtividade extends javax.swing.JFrame {
 
     private void criarAtividade(){
         if(txtTitulo.getText().equals("") || txtData.getText().equals("") || txtDescricao.getText().equals("")){
-            JOptionPane.showMessageDialog(rootPane, "Falor preencher todos os campos");
+            JOptionPane.showMessageDialog(rootPane, "Favor preencher todos os campos");
         }
                 
         else{
@@ -249,6 +249,10 @@ public class NovaAtividade extends javax.swing.JFrame {
                 
                 if(dao.criarAtividade(atividade,descricao,data,idUsuario) == true){
                     JOptionPane.showMessageDialog(rootPane,"Atividade cadastrada com sucesso!");
+                }
+                
+                else{
+                    JOptionPane.showMessageDialog(rootPane,"Falha ao criar Atividade!");
                 }
             }
             
